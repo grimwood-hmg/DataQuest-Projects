@@ -1,0 +1,209 @@
+#!/usr/bin/env python3
+## DataQuest.io
+## Python for DataScience: Intermediate
+## Python Data Analysis Basics
+#edited for upload to GitHub
+
+opened_file = open(".../Files/Python/DataQuest MOMA - Museum of Modern Art/artworks_clean.csv")
+from csv import reader
+read_file = reader(opened_file)
+moma_data = list(read_file)
+moma_data = moma_data[1:]
+
+# convert birthdate values
+for row in moma_data:
+	birth_date = row[3]
+	if birth_date != "":
+		birth_date = int(birth_date)
+	row[3] = birth_date
+
+#convert death date values
+for row in moma_data:
+	death_date = row[4]
+	if death_date != "":
+		death_date = int(death_date)
+	row[4] = death_date
+	
+# convert creation date
+for row in moma_data:
+	creation_date = row[6]
+	if creation_date != "":
+		creation_date = int(creation_date)
+	row[6] = creation_date
+	
+ages = []
+
+for row in moma_data:
+	date = row[6]
+	birth = row[3]
+	if type(birth) == int:
+		age = date - birth
+	else:
+		age = 0
+	ages.append(age)	
+
+print(ages[5:10])
+
+final_ages = []
+
+for age in ages:
+	if age > 20:
+		final_age = age
+	else:
+		final_age = "Unknown"
+	final_ages.append(final_age)
+	
+print(final_ages[5:10])
+
+## converting ages to decades
+
+## e.g.
+## age variable is left alone and essentially copy pasta'ed, sliced and added to decade for modification in below example
+#age = 24
+#decade = str(age)
+#decade = decade[:-1]
+#print(decade)
+#combined = "lengthen" + "ing"
+#print(combined)
+#decade = decade + "0s"
+#print(decade)
+
+decades = []
+
+for age in final_ages:
+	if age == "Unknown":
+		decades.append(age)
+	if age != "Unknown":
+		decade = str(age)
+		decade = decade[:-1]
+		decade = decade + "0s"
+		decades.append(decade)
+
+print(decades[5:10])
+
+## summarizing the data further in a frequency table
+
+## e.g.: fruit
+#fruit = ['orange', 'orange', 'orange', 'banana',
+#			'apple', 'banana', 'orange', 'banana',
+#			'apple', 'banana']
+#fruit_frequency = {}
+#
+#for f in fruit:
+#	if f not in fruit_frequency:
+#		fruit_frequency[f] = 1
+#	else:
+#		fruit_frequency[f] += 1
+#	print(fruit_frequency)
+	
+decade_frequency = {}
+
+for a in decades:
+	if a not in decade_frequency:
+		decade_frequency[a] = 1
+	else:
+		decade_frequency[a] += 1
+
+print(decade_frequency)
+
+### inserting variables into strings
+### basic method
+#name = "Jon"
+#numba = 69
+#output = name + "'s fave numba be " + str(numba)
+#print(output)
+#
+### str.format method
+#output_one = "{}'s favorite number is {}".format(name, numba)
+#print(output_one)
+#
+### str.format method pt 2
+#
+#output_two = "{}'s fave numba be {}.".format("Su Bands", 8)
+#print(output_two)
+#
+#output_three = "{0}'s fave number be {1}; {1} is {0}'s fave numba.".format("Arielle", 42)
+#print(output_three)
+#
+#output_template = "{name}'s fave number is {numba}."
+#output_four = output_template.format(name="Oli", numba=479)
+#print(output_four)
+
+### creating artist freq table
+### intro
+## create empty dict to hold table
+#gender_freq = {}
+## loop over rows in dataset
+#for row in moma_data:
+#	# assign column's data to a variable
+#	g = row[5]
+#	# if data is not present in freq table but in dataset, then set to 1
+#	if g not in gender_freq:
+#		gender_freq[g] = 1
+#	# otherwise add 1 for each data item, ie count.
+#	else:
+#		gender_freq[g] += 1
+#		
+#print(gender_freq)
+
+artist_freq = {}
+
+for row in moma_data:
+	artist = row[1]
+	if artist not in artist_freq:
+		artist_freq[artist] = 1
+	else:
+		artist_freq[artist] += 1
+	
+## creating an artist summary function
+# function should retrieve number of works, use a str template to form a sentence, a str.format to insert relavent info and print the output.
+def artist_summary(artist):
+	work_number = artist_freq[artist]
+	template_output = "{name} has produced {numba} works of art."
+	artist_output = template_output.format(name=artist, numba=work_number)
+	print(artist_output)
+
+artist_summary("Henri Matisse")
+
+## Formating numbers inside of strings
+
+#num = 32.6969696969
+#print("I own {pct}% of the company".format(pct=num))
+
+# six+ decimals after a number in an output, ie precision, is mostly unnecessary.
+# one could show 2 instead of 10
+# format specification: https://docs.python.org/3/library/string.html#formatspec
+
+#num_a = 42.6666667
+#print("I own {pct:.2f}% of Zed Entertainment, Inc.".format(pct=num_a))
+#
+## can add comma
+#
+#population_a = 69000000000000
+#print("The population of Imaginarium is {pop:,}".format(pop=population))
+#
+#bal = 420420.45769
+#print("My bank account balance is ${balance:,.2f}.".format(balance=bal))
+
+# the assignment:
+#- Use a for loop to iterate through the list of lists to gather the 1) country name and 2) population
+#- Insert that information into a string template
+#- The template should modify the numbers to include commas and truncate the precision to two decimal places.
+#- Output should be printed.
+#pop_millions = [
+#	["China", 1379.302771],
+#	["India", 1281.935991],
+#	["USA",  326.625791],
+#	["Indonesia",  260.580739],
+#	["Brazil",  207.353391],
+#]
+#
+#pop_template = "The population of {state} is {popu:,.2f} million"
+#
+#for p in pop_millions:
+#	country = p[0]
+#	population = p[1]
+#	output_statement = pop_template.format(state=country, popu=population)
+#	print(output_statement)
+
+
