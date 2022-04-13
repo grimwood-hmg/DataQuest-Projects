@@ -16,5 +16,7 @@ This contains a scratch sheet for working with basic data summarization techniqu
 This contains just a scratch sheet for exploring objects and classes in Python.
 
 ### Hacker News project
-
 This was a project in which I analyzed the average amount of engagement and average time of engagement of Hacker News posts. This type of analysis can help to plan online posts/engagement to maximize engagement with other users. This is a brief introduction to the this area of analysis and study.
+
+### I-94 Data Visualization project
+This project looks at and visualizes a dataset of westbound traffic on Interstate 94 between St. Paul, Minnesota and Minneapolis. Data was collected at automatic traffic recorder station 301, approximately halfway between the two cities.
